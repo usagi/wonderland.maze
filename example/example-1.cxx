@@ -32,7 +32,7 @@ int main( int number_of_parameters, char** parameters )
   // https://github.com/kripken/emscripten/issues/2439
   auto rng = std::make_shared< decltype( g )::element_type::rng_t >( );
 #else
-  auto rng = std::make_shared< decltype( g )::element_type::rng_t >(4 /*std::random_device()()*/ );
+  auto rng = std::make_shared< decltype( g )::element_type::rng_t >( std::random_device()() );
 #endif
   
   constexpr auto generator_algorithm = maze::generator::algorithm::drill;
