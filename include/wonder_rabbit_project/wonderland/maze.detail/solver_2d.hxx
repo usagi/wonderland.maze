@@ -175,22 +175,22 @@ namespace wonder_rabbit_project
             
             coordinate_t start, goal;
             
-            std::function< auto ( const coordinate_t& p ) -> size_t > distance;
+            std::function< auto ( const coordinate_t& p, const coordinate_t& np ) -> size_t > distance;
             
             switch( _algorithm )
             { case solver::algorithm::dijkstra:
                 solve_find_cell( &start, nullptr );
-                distance = [&]( const coordinate_t& p)
+                distance = [&]( const coordinate_t& p, const coordinate_t&)
                   {
                     return data[ p.y ][ p.x ] -> distance + 1;
-                    //const auto delta = p - start;
+                    //const auto delta = np - start;
                     //return std::abs( delta.x ) + std::abs( delta.y );
                   };
                 break;
                 
               case solver::algorithm::a_star:
                 solve_find_cell( &start, &goal );
-                distance = [&]( const coordinate_t& np )
+                distance = [&]( const coordinate_t&, const coordinate_t& np )
                   {
                     const auto delta = np - goal;
                     return std::abs( delta.x ) + std::abs( delta.y );
@@ -208,7 +208,7 @@ namespace wonder_rabbit_project
               >
               search_queue
                 ( [&]( const coordinate_t& a, const coordinate_t& b )
-                  { return distance( a ) > distance( b ); }
+                  { return distance( data[ a.y ][ a.x ] -> previous, a ) > distance( data[ b.y ][ b.x ] -> previous, b ); }
                 )
               ;
             
@@ -229,17 +229,7 @@ namespace wonder_rabbit_project
                 )
                   continue;
                 
-                size_t d;
-                switch( _algorithm )
-                { case solver::algorithm::dijkstra:
-                    d = distance( p );
-                    break;
-                  case solver::algorithm::a_star:
-                    d = distance( np );
-                    break;
-                  default:
-                    throw std::runtime_error( "invalid algorithm." );
-                }
+                auto d = distance( p, np );
                 
                 auto next_cell = data[ np.y ][ np.x ];
                 
@@ -281,7 +271,7 @@ namespace wonder_rabbit_project
             _answer -> emplace_front( std::move( start ) );
             
             // for debug
-            /*
+            //*
             {
               std::stringstream r;
               for ( const auto data_raw : data )
