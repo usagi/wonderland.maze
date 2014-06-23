@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(generator_drill_2d)
 
-set(TARGET "generator_drill_2d")
-set(SOURCE "generator_drill_2d.cxx")
+set(TARGET "example-1")
+set(SOURCE "example-1.cxx")
 
 if(CMAKE_CXX_COMPILER MATCHES "/em\\+\\+(-[a-zA-Z0-9.])?$")
 

@@ -3,20 +3,19 @@ wonderland.maze
 
 C++ header only maze generaters and solvers library.
 
+## Note
+
+the project has not tagged release version yet.
+
 ## Dependancy
 
 C++ std only
 
 ## Example
 
-- Generators
-    - [example/generate_drill_2d.cxx](example/generate_drill_2d.cxx)
-- Solvers
-    - [example/solver_dijkstra_2d.cxx](example/solver_dijkstra_2d.cxx)
-    - [example/solver_a_star_2d.cxx](example/solver_a_star_2d.cxx)
+- [example/example-1.cxx](example/example-1.cxx)
 
 ### Building and Usage
-
 
 - Building
     1. `git clone git@github.com:usagi/wonderland.maze.git`
